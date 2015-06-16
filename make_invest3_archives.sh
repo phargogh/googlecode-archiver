@@ -10,10 +10,10 @@ echo `pwd`
 hg pull
 for tag in `hg tags | egrep -o '^[^ ]+'`
 do
-    hg up $tag
-    python setup.py clean
+    hg update -C -r $tag
+    rm -r build
     python setup.py sdist --dist-dir $archive_dir
-    hg archive $archive_dir/invest-natcap.invest-3-${tag}.tar.gz
+    hg archive $archive_dir/invest-natcap.invest-3-${tag}.zip
 done
 
 
