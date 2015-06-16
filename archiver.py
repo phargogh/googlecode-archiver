@@ -31,9 +31,14 @@ def mkdir(dirname):
     if not os.path.exists(dirname):
         os.mkdir(dirname)
 
+def scp(dirname):
+    subprocess.call('scp -r %s jdouglass@ncp-geome:~/backblaze_mount' % dirname, shell=True)
+
 if __name__ == '__main__':
     archive_dir = 'archives'
     mkdir(archive_dir)
 
     for project in ['invest-natcap', 'natcap-dev']:
         get_repos(project, archive_dir)
+
+    scp(archive_dir)
