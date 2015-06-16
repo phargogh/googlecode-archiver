@@ -3,7 +3,7 @@ import urllib2
 import os
 import subprocess
 
-def get_repos(gcode_projectname, out_dir):
+def get_repos(gcode_projectname, out_dir, dry_run=False):
     gcode_url = 'https://code.google.com/p/%s/source/checkout' % gcode_projectname
 
     # get the file.
@@ -14,6 +14,11 @@ def get_repos(gcode_projectname, out_dir):
 
     repo_url = "https://code.google.com/p/%s" % gcode_projectname
     repo_strings = ["%s.%s" % (repo_url, option.string) for option in options]
+
+    if dry_run is True:
+        for repo in repo_strings:
+            print os.path.basename(repo)
+        return
 
     for repo in repo_strings:
         repo_basename = os.path.basename(repo)
@@ -38,7 +43,7 @@ if __name__ == '__main__':
     archive_dir = 'archives'
     mkdir(archive_dir)
 
-    for project in ['invest-natcap', 'natcap-dev']:
-        get_repos(project, archive_dir)
+    for project in ['invest-natcap', 'natcap-dev', 'map-overlay-annotation']:
+        get_repos(project, archive_dir, True)
 
-    scp(archive_dir)
+    #scp(archive_dir)
