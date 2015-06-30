@@ -21,6 +21,9 @@ def get_repos(gcode_projectname, out_dir, dry_run=False):
         return
 
     for repo in repo_strings:
+        if repo.endswith('.default'):
+            repo = repo.replace('.default', '')
+
         repo_basename = os.path.basename(repo)
 
         if not os.path.exists(repo_basename):
@@ -44,6 +47,6 @@ if __name__ == '__main__':
     mkdir(archive_dir)
 
     for project in ['invest-natcap', 'natcap-dev', 'map-overlay-annotation']:
-        get_repos(project, archive_dir, True)
+        get_repos(project, archive_dir, False)
 
     #scp(archive_dir)
